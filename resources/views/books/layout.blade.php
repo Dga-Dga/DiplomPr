@@ -7,7 +7,6 @@
     <title>Книжный магазин</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* Простые стили для карточек */
         .book-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -37,7 +36,6 @@
 
         .book-cover {
             height: 200px;
-            /* фиксируем высоту */
             background: #f5f5f5;
             display: flex;
             align-items: center;
@@ -51,7 +49,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* картинка заполнит блок, обрезая края */
         }
 
         /* .book-cover img {

@@ -21,11 +21,11 @@
                     </div>
                 </a>
                 <div class="book-info">
-                    <a href="{{ route('books.edit', $book) }}" class="btn btn-card">✏️</a>
+                    <a href="{{ route('books.edit', $book) }}" class="btn btn-card">Редактировать</a>
                     <form action="{{ route('books.destroy', $book) }}" method="POST" style="flex:1;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-card" onclick="return confirm('Удалить книгу?')">🗑️</button>
+                        <button type="submit" class="btn btn-card" onclick="return confirm('Удалить книгу?')">Удалить</button>
                     </form>
                 </div>
             </div>

@@ -36,20 +36,20 @@ class BookController extends Controller
         'title'  => 'required|string|max:255',
         'author' => 'required|string|max:255',
         'price'  => 'required|numeric|min:0',
-        'image'  => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // картинка обязательна
+        'image'  => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
     ]);
 
-    // Сохраняем картинку в storage/app/public/books
+
     $path = $request->file('image')->store('books', 'public');
 
     Book::create([
         'title'  => $validated['title'],
         'author' => $validated['author'],
         'price'  => $validated['price'],
-        'image'  => $path, // в БД пишем относительный путь
+        'image'  => $path,
     ]);
 
-    return redirect()->route('books.index')->with('success', 'Книга добавлена!');
+    return redirect()->route('books/index')->with('success', 'Книга добавлена!');
     }
 
     /**
@@ -57,7 +57,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return view('books.show', compact('book'));
+        return view('books/show', compact('book'));
     }
 
     /**
@@ -65,7 +65,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-         return view('books.edit', compact('book'));
+         return view('books/edit', compact('book'));
     }
 
     /**
@@ -87,17 +87,17 @@ class BookController extends Controller
     ];
 
     if ($request->hasFile('image')) {
-        // Удаляем старую картинку
+
         if ($book->image) {
             Storage::disk('public')->delete($book->image);
         }
-        // Сохраняем новую
+
         $data['image'] = $request->file('image')->store('books', 'public');
     }
 
     $book->update($data);
 
-    return redirect()->route('books.index')->with('success', 'Книга обновлена!');
+    return redirect()->route('books/index')->with('success', 'Книга обновлена!');
     }
 
     /**
@@ -105,12 +105,12 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        // Удаляем файл картинки
+
     if ($book->image) {
         Storage::disk('public')->delete($book->image);
     }
     $book->delete();
 
-    return redirect()->route('books.index')->with('success', 'Книга удалена!');
+    return redirect()->route('books/index')->with('success', 'Книга удалена!');
     }
 }

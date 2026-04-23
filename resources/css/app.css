@@ -18,7 +18,7 @@
 
     body {
       font-family: "Inter", sans-serif;
-      background-color: #fefaf5;  /* очень мягкий тёплый фон */
+      background-color: #fefaf5;
       color: #2e241e;
       line-height: 1.5;
       display: flex;
@@ -26,17 +26,16 @@
       min-height: 100vh;
     }
 
-    /* плавные анимации для всего */
+
     a, button, input, .book-card, .sidebar a, .btn {
       transition: all 0.25s ease-in-out;
     }
 
-    /* переменные — приятные оранжевые оттенки, не слишком яркие */
     :root {
-      --orange-soft: #f5a65b;      /* основной мягкий оранжевый */
-      --orange-light: #fce6d4;     /* для фона акцентов */
-      --orange-deep: #e0893c;      /* для наведения / глубины */
-      --orange-warm: #d9782b;      /* для кнопок при наведении */
+      --orange-soft: #f5a65b;
+      --orange-light: #fce6d4;
+      --orange-deep: #e0893c;
+      --orange-warm: #d9782b;
       --white-soft: #ffffff;
       --gray-warm: #f9f3ed;
       --shadow-sm: 0 8px 20px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.03);
@@ -45,14 +44,12 @@
       --border-radius-btn: 40px;
     }
 
-    /* ----- ОБЩИЕ КОМПОНЕНТЫ ----- */
     .container {
       max-width: 1440px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
-    /* кнопка */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -84,7 +81,6 @@
       transform: translateY(-1px);
     }
 
-    /* шапка */
     .header {
       background: var(--white-soft);
       padding: 16px 0;
@@ -128,7 +124,6 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* панель поиска */
     .search-wrapper {
       flex: 1;
       max-width: 520px;
@@ -206,14 +201,12 @@
       color: var(--orange-deep);
     }
 
-    /* основной блок: боковая панель + контент */
     .main-grid {
       display: flex;
       gap: 32px;
       margin: 40px 0 60px;
     }
 
-    /* ----- БОКОВАЯ ПАНЕЛЬ (поиск по категориям) ----- */
     .sidebar {
       flex: 0 0 260px;
       background: var(--white-soft);
@@ -243,7 +236,6 @@
       color: var(--orange-soft);
     }
 
-    /* мини-поиск внутри боковой панели (по категориям) */
     .category-search {
       margin-bottom: 28px;
     }
@@ -276,7 +268,6 @@
       background: white;
     }
 
-    /* список категорий */
     .category-list {
       list-style: none;
     }
@@ -318,7 +309,6 @@
       border-radius: 30px;
     }
 
-    /* ----- ОСНОВНОЙ КОНТЕНТ (карточки) ----- */
     .content {
       flex: 1;
     }
@@ -349,14 +339,12 @@
       font-size: 0.9rem;
     }
 
-    /* сетка карточек */
     .books-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 28px;
     }
 
-    /* карточка товара */
     .book-card {
       background: var(--white-soft);
       border-radius: var(--border-radius-card);
@@ -423,7 +411,6 @@
       letter-spacing: -0.01em;
     }
 
-    /* кнопка в карточке — ключевое поведение: при наведении на КАРТОЧКУ меняется фон и цвет текста */
     .book-card .btn-card {
       background: white;
       color: var(--orange-soft);
@@ -437,7 +424,6 @@
       box-shadow: none;
     }
 
-    /* ховер именно на карточку — меняем кнопку */
     .book-card:hover .btn-card {
       background: var(--orange-soft);
       color: white;
@@ -446,15 +432,13 @@
       box-shadow: 0 6px 14px rgba(245, 166, 91, 0.35);
     }
 
-    /* также при наведении на саму кнопку доп эффект */
     .book-card .btn-card:hover {
       background: var(--orange-warm);
       border-color: var(--orange-warm);
     }
 
-    /* ----- ПОДВАЛ ----- */
     .footer {
-      background: #2e241e; /* глубокий тёплый тон */
+      background: #2e241e;
       color: #f0dfd3;
       padding: 48px 0 24px;
       margin-top: auto;
@@ -520,7 +504,8 @@
       transform: scale(1.15);
     }
 
-    /* адаптивность */
+
+    /* Для мобилок */
     @media (max-width: 900px) {
       .main-grid {
         flex-direction: column;
@@ -548,7 +533,7 @@
       }
     }
 
-    /* дополнительные украшения */
+
     .badge-new {
       background: var(--orange-light);
       color: var(--orange-deep);

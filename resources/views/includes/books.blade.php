@@ -1,14 +1,11 @@
-<!-- ОСНОВНАЯ ЧАСТЬ: боковая панель + карточки -->
 <div class="container main-grid">
   
-  <!-- БОКОВАЯ ПАНЕЛЬ ДЛЯ ПОИСКА ПО КАТЕГОРИЯМ -->
   <aside class="sidebar">
     <div class="sidebar-title">
       <i class="fas fa-sliders-h"></i> 
       <span>Категории</span>
     </div>
 
-    <!-- мини-поиск по категориям (боковая панель) -->
     <div class="category-search">
       <div class="search-box">
         <i class="fas fa-filter"></i>
@@ -27,7 +24,6 @@
       <li><a href="#"><i class="fas fa-utensils"></i> Кулинария и хобби <span class="count">39</span></a></li>
     </ul>
 
-    <!-- небольшой раздел "популярные фильтры" -->
     <div style="margin-top: 32px;">
       <div style="font-weight: 600; margin-bottom: 16px; color: #4a2e1e;"><i class="far fa-star" style="color: var(--orange-soft);"></i> Популярное</div>
       <a href="#" style="display:block; background: #fef6f0; padding: 12px 14px; border-radius: 18px; text-decoration: none; color:#3f2a1c; margin-bottom: 8px;">
@@ -39,7 +35,6 @@
     </div>
   </aside>
 
-  <!-- ОСНОВНОЙ КОНТЕНТ (сетка книг) -->
   <main class="content">
     <div class="content-header">
       <h2><i class="fas fa-fire" style="color: var(--orange-soft);"></i> Популярные сейчас</h2>
@@ -47,7 +42,7 @@
     </div>
 
     <div class="books-grid">
-      <!-- Карточка 1 -->
+
       <div class="book-card">
         <div class="book-cover">
           <i class="fas fa-book"></i>
@@ -59,7 +54,7 @@
         </div>
         <button class="btn btn-card"><i class="fas fa-shopping-cart"></i> В корзину</button>
       </div>
-      {{-- <!-- Карточка 2 -->
+
       <div class="book-card">
         <div class="book-cover">
           <i class="fas fa-atom"></i>
@@ -71,7 +66,7 @@
         </div>
         <button class="btn btn-card"><i class="fas fa-shopping-cart"></i> В корзину</button>
       </div>
-      <!-- Карточка 3 -->
+
       <div class="book-card">
         <div class="book-cover">
           <i class="fas fa-dragon"></i>
@@ -83,7 +78,7 @@
         </div>
         <button class="btn btn-card"><i class="fas fa-shopping-cart"></i> В корзину</button>
       </div>
-      <!-- Карточка 4 -->
+
       <div class="book-card">
         <div class="book-cover">
           <i class="fas fa-feather-alt"></i>
@@ -95,7 +90,7 @@
         </div>
         <button class="btn btn-card"><i class="fas fa-shopping-cart"></i> В корзину</button>
       </div>
-      <!-- Карточка 5 -->
+
       <div class="book-card">
         <div class="book-cover">
           <i class="fas fa-robot"></i>
@@ -107,7 +102,7 @@
         </div>
         <button class="btn btn-card"><i class="fas fa-shopping-cart"></i> В корзину</button>
       </div>
-      <!-- Карточка 6 -->
+      
       <div class="book-card">
         <div class="book-cover">
           <i class="fas fa-tree"></i>
@@ -116,7 +111,7 @@
           <div class="book-title">Тайная жизнь деревьев</div>
           <div class="book-author">Петер Вольлебен</div>
           <div class="book-price">970 ₽</div>
-        </div> --}}
+        </div>
         <button class="btn btn-card"><i class="fas fa-shopping-cart"></i> В корзину</button>
       </div>
     </div>
