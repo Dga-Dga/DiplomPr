@@ -1,5 +1,5 @@
-@include('layouts/base')
+@include('layouts.base')
 
-@include('includes/books')
+@include('includes.books')
 
 @include('includes.footer')

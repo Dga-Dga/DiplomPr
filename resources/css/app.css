@@ -552,3 +552,59 @@
     .fa-chevron-right {
       font-size: 0.7rem;
     }
+
+
+
+    /* Контейнер обложки должен быть relative, чтобы кнопки позиционировались внутри него */
+.book-card .book-cover {
+    position: relative;
+    overflow: hidden; /* чтобы кнопки не вылезали за границы */
+}
+
+/* Общие стили для кнопок на обложке */
+.cover-action {
+    position: absolute;
+    left: 8px;
+    z-index: 2;
+    background: rgba(255,255,255,0.9);
+    border-radius: 4px;
+    padding: 4px 6px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    line-height: 1;
+    transition: background 0.2s;
+}
+.cover-action:hover {
+    background: rgba(255,255,255,1);
+    color: #000;
+}
+
+/* Кнопка редактировать — сверху */
+.edit-action {
+    top: 8px;
+}
+
+/* Кнопка удалить — снизу */
+.delete-action {
+    bottom: 8px;
+}
+
+/* Стили для внутренней кнопки формы удаления (убираем браузерный вид) */
+.delete-action button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    font-size: inherit;
+    line-height: 1;
+}
+
+/* Кнопка "Купить" в состоянии "В корзине" */
+.buy-btn.added {
+    background-color: #f0ad4e;
+    color: white;
+    border-color: #eea236;
+}
+

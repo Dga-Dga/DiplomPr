@@ -82,13 +82,30 @@
                 @forelse($books as $book)
                     <div class="book-card">
                         <a href="{{ route('books.show', $book) }}" style="text-decoration: none; color: inherit;">
-                            <div class="book-cover">
+                            <div class="book-cover" style="position: relative;">
                                 @if($book->image)
                                     <img src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}">
                                 @else
-                                    <i class="fas fa-book"></i>
+                                    <i class="fas fa-book" style="font-size: 48px; color: #aaa;"></i>
                                 @endif
+
+                                <!-- Кнопка редактировать (левый верхний угол) -->
+                                <a href="{{ route('books.edit', $book) }}" class="cover-action edit-action"
+                                    title="Редактировать">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+
+                                <!-- Кнопка удалить (левый нижний угол) -->
+                                <form action="{{ route('books.destroy', $book) }}" method="POST"
+                                    class="cover-action delete-action" onsubmit="return confirm('Удалить книгу?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" title="Удалить">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
+
                             <div class="book-info">
                                 <div class="book-title">{{ $book->title }}</div>
                                 <div class="book-author">{{ $book->author }}</div>
@@ -97,14 +114,12 @@
                                 </div>
                             </div>
                         </a>
-                        <div style="display: flex; gap: 5px; margin-top: 10px;">
-                            <a href="{{ route('books.edit', $book) }}" class="btn" style="flex:1;">✏️</a>
-                            <form action="{{ route('books.destroy', $book) }}" method="POST" style="flex:1;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" style="width:100%;"
-                                    onclick="return confirm('Удалить книгу?')">🗑️</button>
-                            </form>
+
+                        <!-- Кнопка купить (вместо старых кнопок) -->
+                        <div class="book-actions" style="margin-top: 10px;">
+                            <button class="btn buy-btn" data-added="false">
+                                <i class="fas fa-shopping-cart"></i> <span>Купить</span>
+                            </button>
                         </div>
                     </div>
                 @empty
@@ -113,4 +128,28 @@
             </div>
         </div>
     </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const buyButtons = document.querySelectorAll('.buy-btn');
+
+    buyButtons.forEach(btn => {
+        btn.addEventListener('click', function(event) {
+            // Чтобы клик по кнопке не переходил по ссылке родительской <a>
+            event.preventDefault();
+            event.stopPropagation();
+
+            const isAdded = this.getAttribute('data-added') === 'true';
+            if (isAdded) {
+                this.setAttribute('data-added', 'false');
+                this.innerHTML = '<i class="fas fa-shopping-cart"></i> <span>Купить</span>';
+                this.classList.remove('added');
+            } else {
+                this.setAttribute('data-added', 'true');
+                this.innerHTML = '<i class="fas fa-check"></i> <span>В корзине</span>';
+                this.classList.add('added');
+            }
+        });
+    });
+});
+</script>
 @endsection
