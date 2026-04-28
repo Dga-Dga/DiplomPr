@@ -5,18 +5,57 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 
 
 class BookController extends Controller
 {
+    private $genres = [
+        'Художественная литература' => 'fa-book',
+        'Детективы и триллеры'       => 'fa-mask',
+        'Фантастика / Фэнтези'       => 'fa-rocket',
+        'Любовные романы'            => 'fa-heart',
+        'Бизнес и саморазвитие'      => 'fa-briefcase',
+        'Научно-популярное'          => 'fa-flask',
+        'Детские книги'              => 'fa-child',
+        'Кулинария и хобби'          => 'fa-utensils',
+    ];
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::query()->latest()->get(); // все книги, новые сверху
-        return view('books.index', compact('books'));
+        $query = Book::query();
+
+        // Поиск по названию
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('title', 'like', "%{$search}%");
+        }
+
+        // Фильтр по жанру
+        if ($request->filled('genre')) {
+            $query->where('genre', $request->input('genre'));
+        }
+
+        // Новинки недели (если передан параметр new)
+        if ($request->has('new')) {
+            $query->where('created_at', '>=', now()->subWeek());
+        }
+
+        $books = $query->latest()->get();
+
+        // Счётчики книг по жанрам (всегда все, чтобы sidebar показывал актуальные цифры)
+        $genreCounts = Book::select('genre', DB::raw('count(*) as count'))
+        ->groupBy('genre')
+        ->pluck('count', 'genre');
+
+        $genres = $this->genres;
+
+        $totalBooksCount = Book::query()->count('*');
+
+        return view('books.index', compact('books', 'genres', 'genreCounts', 'totalBooksCount'));
     }
 
     /**
@@ -24,7 +63,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $genres = $this->genres;
+        return view('books.create', compact('genres'));
     }
 
     /**
@@ -33,23 +73,26 @@ class BookController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-        'title'  => 'required|string|max:255',
-        'author' => 'required|string|max:255',
-        'price'  => 'required|numeric|min:0',
-        'image'  => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
-    ]);
+            'title'  => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'price'  => 'required|numeric|min:0',
+            'genre'  => 'required|string|max:255',
+            'image'  => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+        ]);
 
 
-    $path = $request->file('image')->store('books', 'public');
 
-    Book::create([
-        'title'  => $validated['title'],
-        'author' => $validated['author'],
-        'price'  => $validated['price'],
-        'image'  => $path,
-    ]);
+        $path = $request->file('image')->store('books', 'public');
 
-    return redirect()->route('books.index')->with('success', 'Книга добавлена!');
+        Book::create([
+            'title'  => $validated['title'],
+            'author' => $validated['author'],
+            'price'  => $validated['price'],
+            'genre'  => $validated['genre'],
+            'image'  => $path,
+        ]);
+
+        return redirect()->route('books.index')->with('success', 'Книга добавлена!');
     }
 
     /**
@@ -65,7 +108,8 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-         return view('books.edit', compact('book'));
+        $genres = $this->genres;
+        return view('books.edit', compact('book', 'genres'));
     }
 
     /**
@@ -73,31 +117,33 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-         $validated = $request->validate([
-        'title'  => 'required|string|max:255',
-        'author' => 'required|string|max:255',
-        'price'  => 'required|numeric|min:0',
-        'image'  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // необязательно
-    ]);
+        $validated = $request->validate([
+            'title'  => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'price'  => 'required|numeric|min:0',
+            'genre' => 'required|string|max:255',
+            'image'  => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // необязательно
+        ]);
 
-    $data = [
-        'title'  => $validated['title'],
-        'author' => $validated['author'],
-        'price'  => $validated['price'],
-    ];
+        $data = [
+            'title'  => $validated['title'],
+            'author' => $validated['author'],
+            'price'  => $validated['price'],
+            'genre'  => $validated['genre'],  
+        ];
 
-    if ($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
 
-        if ($book->image) {
-            Storage::disk('public')->delete($book->image);
+            if ($book->image) {
+                Storage::disk('public')->delete($book->image);
+            }
+
+            $data['image'] = $request->file('image')->store('books', 'public');
         }
 
-        $data['image'] = $request->file('image')->store('books', 'public');
-    }
+        $book->update($data);
 
-    $book->update($data);
-
-    return redirect()->route('books.index')->with('success', 'Книга обновлена!');
+        return redirect()->route('books.index')->with('success', 'Книга обновлена!');
     }
 
     /**
@@ -106,11 +152,11 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
 
-    if ($book->image) {
-        Storage::disk('public')->delete($book->image);
-    }
-    Book::destroy($book->id);
+        if ($book->image) {
+            Storage::disk('public')->delete($book->image);
+        }
+        Book::destroy($book->id);
 
-    return redirect()->route('books.index')->with('success', 'Книга удалена!');
+        return redirect()->route('books.index')->with('success', 'Книга удалена!');
     }
 }

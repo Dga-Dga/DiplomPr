@@ -12,6 +12,7 @@
         </div>
         <div>
             <p><strong>Автор:</strong> {{ $book->author }}</p>
+            <p><strong>Жанр:</strong> {{ $book->genre ?? 'Не указан' }}</p>
             <p><strong>Цена:</strong> {{ number_format($book->price, 0, ',', ' ') }} ₽</p>
             <div style="margin-top: 20px;">
                 <a href="{{ route('books.edit', $book) }}" class="btn">Редактировать</a>
