@@ -15,7 +15,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::latest()->get(); // все книги, новые сверху
+        $books = Book::query()->latest()->get(); // все книги, новые сверху
         return view('books.index', compact('books'));
     }
 
@@ -49,7 +49,7 @@ class BookController extends Controller
         'image'  => $path,
     ]);
 
-    return redirect()->route('books/index')->with('success', 'Книга добавлена!');
+    return redirect()->route('books.index')->with('success', 'Книга добавлена!');
     }
 
     /**
@@ -57,7 +57,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return view('books/show', compact('book'));
+        return view('books.show', compact('book'));
     }
 
     /**
@@ -65,7 +65,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-         return view('books/edit', compact('book'));
+         return view('books.edit', compact('book'));
     }
 
     /**
@@ -97,7 +97,7 @@ class BookController extends Controller
 
     $book->update($data);
 
-    return redirect()->route('books/index')->with('success', 'Книга обновлена!');
+    return redirect()->route('books.index')->with('success', 'Книга обновлена!');
     }
 
     /**
@@ -109,8 +109,8 @@ class BookController extends Controller
     if ($book->image) {
         Storage::disk('public')->delete($book->image);
     }
-    $book->delete();
+    Book::destroy($book->id);
 
-    return redirect()->route('books/index')->with('success', 'Книга удалена!');
+    return redirect()->route('books.index')->with('success', 'Книга удалена!');
     }
 }

@@ -1,24 +1,27 @@
 @extends('books.layout')
 
+@push('layouts.base')
+
+
 @section('content')
     <h1>Добавить книгу</h1>
 
     <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <div style="margin-bottom: 15px;">
+        <div>
             <label>Название:</label>
             <input type="text" name="title" value="{{ old('title') }}" required>
             @error('title') <div">{{ $message }}</div> @enderror
         </div>
 
-        <div style="margin-bottom: 15px;">
+        <div>
             <label>Автор:</label>
             <input type="text" name="author" value="{{ old('author') }}" required>
             @error('author') <div">{{ $message }}</div> @enderror
         </div>
 
-        <div style="margin-bottom: 15px;">
+        <div>
             <label>Цена (₽):</label>
             <input type="number" step="0.01" name="price" value="{{ old('price') }}" required>
             @error('price') <div">{{ $message }}</div> @enderror

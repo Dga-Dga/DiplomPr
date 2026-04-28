@@ -1,7 +1,6 @@
-@extends('books/layout')
-@extends('layouts/base')
+@extends('books.layout')
+@extends('layouts.base')
 @section('content')
-    <h1>Каталог книг</h1>
 
     <div class="book-grid">
         @foreach($books as $book)
