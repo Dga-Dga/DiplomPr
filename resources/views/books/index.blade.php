@@ -3,7 +3,7 @@
 @section('content')
 
     <div style="display: flex; gap: 30px; margin-top: 20px;">
-        <!-- БОКОВАЯ ПАНЕЛЬ (ваш шаблон) -->
+        <!-- БОКОВАЯ ПАНЕЛЬ  -->
         <aside class="sidebar" style="width: 250px; background: #f9f9f9; padding: 20px; border-radius: 12px;">
             <div class="sidebar-title" style="font-weight: 600; margin-bottom: 16px; color: #4a2e1e;">
                 <i class="fas fa-sliders-h"></i>
