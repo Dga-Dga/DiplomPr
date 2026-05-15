@@ -1,3 +1,5 @@
+Проверка
+
 ## - composer install --ignore-platform-reqs
 
 ## Очистка КЭША
