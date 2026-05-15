@@ -1,0 +1,22 @@
+.fd {
+    color: blue;
+    display: flex;
+    justify-content: space-around;
+}
+
+.head {
+
+    padding-right: 10px;
+}
+
+.img {
+    overflow: hidden;
+}
+
+
+.card {
+    border-radius: 10px;
+    border-color: rgb(161, 38, 38);
+    border: 100px;
+    color: blueviolet;
+}
