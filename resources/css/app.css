@@ -126,6 +126,21 @@ input,
   -webkit-text-fill-color: transparent;
 }
 
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #f5a65b; /* оранжевый */
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .search-wrapper {
   flex: 1;
   max-width: 720px;

@@ -63,100 +63,81 @@
         <main class="content">
             <div class="book-grid">
                 @forelse($books as $book)
-                    <div class="book-card">
+                        <div class="book-card">
 
-                        <a href="{{ route('books.show', $book) }}" style="text-decoration: none; color: inherit;">
-                            <div class="book-cover" style="position: relative; height: 350px; overflow: hidden;">
-                                @if($book->image)
-                                    <img style="width: 100%; height: 100%; object-fit: cover; display: block;"
-                                        src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}">
-                                @else
-                                    <i class="fas fa-book" style="font-size: 48px; color: #aaa;"></i>
-                                @endif
-
-                                @auth
-                                    <button class="cover-action favorite-action" data-book-id="{{ $book->id }}"
-                                        data-favorited="{{ $book->isFavorited() ? 'true' : 'false' }}"
-                                        title="{{ $book->isFavorited() ? 'Удалить из избранного' : 'Добавить в избранное' }}">
-                                        <i class="{{ $book->isFavorited() ? 'fas' : 'far' }} fa-heart"></i>
-                                    </button>
-                                @endauth
-                                <!-- Кнопка редактировать (левый верхний угол -->
-                                @auth
-
-                                    @if(auth()->user()->isAdmin() || auth()->user()->isManager())
-                                        <a href="{{ route('books.edit', $book) }}" class="cover-action edit-action"
-                                            title="Редактировать">
-                                            <i class="fas fa-pen"></i>
-                                        </a>
-
-                                        <!-- Кнопка удалить левый нижний угол -->
-                                        <form action="{{ route('books.destroy', $book) }}" method="POST"
-                                            class="cover-action delete-action" onsubmit="return confirm('Удалить книгу?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" title="Удалить">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                            <a href="{{ route('books.show', $book) }}" style="text-decoration: none; color: inherit;">
+                                <div class="book-cover" style="position: relative; height: 350px; overflow: hidden;">
+                                    @if($book->image)
+                                        <img style="width: 100%; height: 100%; object-fit: cover; display: block;"
+                                            src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}">
+                                    @else
+                                        <i class="fas fa-book" style="font-size: 48px; color: #aaa;"></i>
                                     @endif
-                                @endauth
-                                </form>
-                            </div>
 
-                            <div class="book-info">
-                                <div class="book-title">{{ $book->title }}</div>
-                                <div class="book-price">{{ number_format($book->price, 0, ',', ' ') }} ₽</div>
-                                <div class="book-author">{{ $book->author }}</div>
-                                <div class="book-genre" style="font-size: 0.8em; color: #888;">{{ $book->genre ?? 'Без жанра' }}
+                                    @auth
+                                        <button class="cover-action favorite-action" data-book-id="{{ $book->id }}"
+                                            data-favorited="{{ $book->isFavorited() ? 'true' : 'false' }}"
+                                            title="{{ $book->isFavorited() ? 'Удалить из избранного' : 'Добавить в избранное' }}">
+                                            <i class="{{ $book->isFavorited() ? 'fas' : 'far' }} fa-heart"></i>
+                                        </button>
+                                    @endauth
+                                    <!-- Кнопка редактировать (левый верхний угол -->
+                                    @auth
+
+                                        @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                                            <a href="{{ route('books.edit', $book) }}" class="cover-action edit-action"
+                                                title="Редактировать">
+                                                <i class="fas fa-pen"></i>
+                                            </a>
+
+                                            <!-- Кнопка удалить левый нижний угол -->
+                                            <form action="{{ route('books.destroy', $book) }}" method="POST"
+                                                class="cover-action delete-action" onsubmit="return confirm('Удалить книгу?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" title="Удалить">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                        @endif
+                                    @endauth
+                                    </form>
                                 </div>
-                            </div>
-                        </a>
 
-                        <!-- Кнопка купить (вместо старых кнопок) -->
-                        <div class="book-actions" style="margin-top: 10px;">
-                            <button class="btn buy-btn" data-added="false">
-                                <span>Купить</span>
-                            </button>
+                                <div class="book-info">
+                                    <div class="book-title">{{ $book->title }}</div>
+                                    <div class="book-price">{{ number_format($book->price, 0, ',', ' ') }} ₽</div>
+                                    <div class="book-author">{{ $book->author }}</div>
+                                    <div class="book-genre" style="font-size: 0.8em; color: #888;">{{ $book->genre ?? 'Без жанра' }}
+                                    </div>
+                                </div>
+                            </a>
+
+                            <!-- Кнопка купить (вместо старых кнопок) -->
+                            <form action="{{ route('cart.store', $book) }}" method="POST" class="d-inline">
+                                @csrf
+                                <button type="submit" class="btn buy-btn">
+                                    <span>Купить</span>
+                                </button>
+                            </form>
+                            
                         </div>
                     </div>
                 @empty
-                    <p>Книги не найдены. Измените параметры поиска.</p>
-                @endforelse
+                <p>Книги не найдены. Измените параметры поиска.</p>
+            @endforelse
 
-            </div>
-            {{-- Штука для новых книг, которые могли не поместиться на страницу --}}
-            <div style="margin-top: 30px; display: flex; justify-content: center;">
-                {{ $books->links('pagination::bootstrap-4') }}
-            </div>
-        </main>
+    </div>
+    {{-- Штука для новых книг, которые могли не поместиться на страницу --}}
+    <div style="margin-top: 30px; display: flex; justify-content: center;">
+        {{ $books->links('pagination::bootstrap-4') }}
+    </div>
+    </main>
     </div>
     <br>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const buyButtons = document.querySelectorAll('.buy-btn');
-
-            buyButtons.forEach(btn => {
-                btn.addEventListener('click', function (event) {
-                    // Чтобы клик по кнопке не переходил по ссылке родительской <a>
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                    const isAdded = this.getAttribute('data-added') === 'true';
-                    if (isAdded) {
-                        this.setAttribute('data-added', 'false');
-                        this.innerHTML = '<span>Купить</span>';
-                        this.classList.remove('added');
-                    } else {
-                        this.setAttribute('data-added', 'true');
-                        this.innerHTML = '<span>В корзине</span>';
-                        this.classList.add('added');
-                    }
-                });
-            });
-        });
 
 
-        
+
     </script>
 @endsection

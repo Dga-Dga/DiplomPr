@@ -15,6 +15,12 @@
     href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
     rel="stylesheet">
 
+
+  @section('styles')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  @endsection
+
+
   {{-- Мои иконки для сайта --}}
   {{-- fas (Solid)
   far (Regular)
@@ -22,6 +28,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+  @stack('styles')
 </head>
 
 <body>
@@ -94,7 +102,9 @@
         @auth
           @if(auth()->user()->isAdmin() || auth()->user()->isManager())
             <a href="{{ route('books.create') }}" class="btn btn-card"> Добавить книгу</a>
+            <a href="{{ route('admin.orders.index') }}" class="btn btn-card">Управление заказами</a>
           @endif
+          <a href="{{ route('orders.index') }}" class="btn btn-card">Мои заказы</a>
         @endauth
 
         <a href="{{ route('favorites.index') }}" title="Избранное" style="position: relative;">
@@ -103,8 +113,19 @@
             <span class="favorites-count">{{ auth()->user()->favorites()->count() }}</span>
           @endauth
         </a>
+
         <a href="{{ route('books.index') }}"><i class="far fa-user-circle"></i></a>
-        <a href="{{ route('books.index') }}"><i class="fas fa-shopping-bag"></i></a>
+
+        <a href="{{ route('cart.index') }}" style="position: relative;" title="Корзина">
+          <i class="fas fa-shopping-bag"></i>
+          @auth
+            <span class="cart-count badge bg-warning text-dark"
+              style="position: absolute; top: -5px; right: -5px; font-size: 0.7rem; min-width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+              {{ Auth::user()->cartItems()->sum('quantity') }}
+            </span>
+          @endauth
+        </a>
+
       </div>
     </div>
   </header>
