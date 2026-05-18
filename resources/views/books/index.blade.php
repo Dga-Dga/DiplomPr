@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('includes.slider')
+
     <div style="display: flex; gap: 30px; margin-top: 20px;">
         <!-- БОКОВАЯ ПАНЕЛЬ  -->
         <aside class="sidebar">

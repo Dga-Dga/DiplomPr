@@ -25,6 +25,7 @@
                                     <i class="fas fa-book" style="font-size: 48px; color: #aaa;"></i>
                                 @endif
                                 @include('admin.buttons')
+                                @include('favorites.button')
                             </div>
                             <div class="book-info">
                                 <div class="book-title">{{ $book->title }}</div>

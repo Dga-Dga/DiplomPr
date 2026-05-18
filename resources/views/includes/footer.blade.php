@@ -6,7 +6,7 @@
         <h4>О ЛитБук</h4>
         <ul>
           <li><a href="{{ route('company') }}"><i class="fas fa-chevron-right"></i>О компании</a></li>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> Контакты</a></li>
+          {{-- <li><a href="#"><i class="fas fa-chevron-right"></i> Контакты</a></li> --}}
           <li><a href="#"><i class="fas fa-chevron-right"></i> Вакансии</a></li>
           <li><a href="#"><i class="fas fa-chevron-right"></i> Блог</a></li>
         </ul>
@@ -31,9 +31,9 @@
       <div class="footer-col">
         <h4>Контакты</h4>
         <ul>
-          <li><a href="#"><i class="fas fa-envelope"></i> hello@litbook.ru</a></li>
-          <li><a href="#"><i class="fas fa-phone"></i> 8 800 555-35-35</a></li>
-          <li><a href="#"><i class="fas fa-map-pin"></i> Москва, ул. Книжная, 12</a></li>
+          <li><a href="#"><i class="fas fa-envelope"></i> ecriuchkov@yandex.ru</a></li>
+          <li><a href="#"><i class="fas fa-phone"></i> 8 953 895 88 72</a></li>
+          <li><a href="#"><i class="fas fa-map-pin"></i> Новосибирск, ул. Красный просп., 177</a></li>
         </ul>
       </div>
     </div>
