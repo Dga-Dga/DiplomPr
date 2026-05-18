@@ -30,6 +30,7 @@
                 </form>
             </div>
             @endif
+            @include('cart.button')
             @endauth
             <br>
             <a href="{{ route('books.index') }}" class="btn">Назад к каталогу</a>

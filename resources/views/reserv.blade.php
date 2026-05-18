@@ -1,3 +1,153 @@
+@extends('layouts.base')
+@section('content')
+
+    <div style="display: flex; gap: 30px; margin-top: 20px;">
+        <!-- БОКОВАЯ ПАНЕЛЬ  -->
+        <aside class="sidebar">
+            <div class="sidebar-title">
+                <i class="fas fa-sliders-h"></i>
+                <span>Категории</span>
+            </div>
+
+            <!-- Список жанров -->
+            <ul class="category-list">
+                <!-- Пункт "Все" -->
+                <li>
+                    <a href="{{ route('books.index', ['search' => request('search')]) }}"
+                        style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 18px; text-decoration: none; color: #3f2a1c; {{ !request('genre') ? 'background: #fef6f0; font-weight: 600;' : '' }}">
+                        <span>
+                            <i class="fas fa-list" style="width: 20px; color: var(--orange-soft);"></i>
+                            Все категории
+                        </span>
+                        <span class="count">
+                            {{ $totalBooksCount }}
+                        </span>
+                    </a>
+                </li>
+
+                @foreach($genres as $genre => $icon)
+                    <li style="margin-bottom: 6px;">
+                        <a href="{{ route('books.index', ['genre' => $genre, 'search' => request('search')]) }}"
+                            style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 18px; text-decoration: none; color: #3f2a1c; {{ request('genre') == $genre ? 'background: #fef6f0; font-weight: 600;' : '' }}">
+                            <span>
+                                <i class="fas {{ $icon }}" style="width: 20px; color: var(--orange-soft);"></i>
+                                {{ $genre }}
+                            </span>
+                            <span class="count"
+                                style="background: #f0e2d0; padding: 2px 8px; border-radius: 12px; font-size: 0.8em;">
+                                {{ $genreCounts[$genre] ?? 0 }}
+                            </span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+
+            <!-- Блок Популярное -->
+            <div style="margin-top: 32px;">
+                <div style="font-weight: 600; margin-bottom: 16px; color: #4a2e1e;">
+                    <i class="far fa-star" style="color: var(--orange-soft);"></i> Популярное
+                </div>
+                <a href="{{ route('books.index', ['new' => 1, 'search' => request('search'), 'genre' => request('genre')]) }}"
+                    style="display:block; background: #fef6f0; padding: 12px 14px; border-radius: 18px; text-decoration: none; color:#3f2a1c; margin-bottom: 8px;">
+                    <i class="fas fa-tag" style="color: var(--orange-soft);"></i> Новинки недели
+                </a>
+                {{-- <a href="#"
+                    style="display:block; background: #fef6f0; padding: 12px 14px; border-radius: 18px; text-decoration: none; color:#3f2a1c;">
+                    <i class="fas fa-crown" style="color: var(--orange-soft);"></i> Бестселлеры
+                </a> --}}
+            </div>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="content">
+            <div class="book-grid">
+                @forelse($books as $book)
+                    <div class="book-card">
+
+                        <a href="{{ route('books.show', $book) }}" style="text-decoration: none; color: inherit;">
+                            <div class="book-cover" style="position: relative; height: 350px; overflow: hidden;">
+                                @if($book->image)
+                                    <img style="width: 100%; height: 100%; object-fit: cover; display: block;" src="{{ asset('storage/' . $book->image) }}" alt="{{ $book->title }}">
+                                @else
+                                    <i class="fas fa-book" style="font-size: 48px; color: #aaa;"></i>
+                                @endif
+
+                                <!-- Кнопка редактировать (левый верхний угол -->
+                                @auth
+                                    @if(auth()->user()->isAdmin() || auth()->user()->isManager())
+                                        <a href="{{ route('books.edit', $book) }}" class="cover-action edit-action"
+                                            title="Редактировать">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+
+                                        <!-- Кнопка удалить левый нижний угол -->
+                                        <form action="{{ route('books.destroy', $book) }}" method="POST"
+                                            class="cover-action delete-action" onsubmit="return confirm('Удалить книгу?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" title="Удалить">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                    @endif
+                                @endauth
+                                </form>
+                            </div>
+
+                            <div class="book-info">
+                                <div class="book-title">{{ $book->title }}</div>
+                                <div class="book-price">{{ number_format($book->price, 0, ',', ' ') }} ₽</div>
+                                <div class="book-author">{{ $book->author }}</div>
+                                <div class="book-genre" style="font-size: 0.8em; color: #888;">{{ $book->genre ?? 'Без жанра' }}
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Кнопка купить (вместо старых кнопок) -->
+                        <div class="book-actions" style="margin-top: 10px;">
+                            <button class="btn buy-btn" data-added="false">
+                                <span>Купить</span>
+                            </button>
+                        </div>
+                    </div>
+                @empty
+                    <p>Книги не найдены. Измените параметры поиска.</p>
+                @endforelse
+
+            </div>
+            {{-- Штука для новых книг, которые могли не поместиться на страницу --}}
+            <div style="margin-top: 30px; display: flex; justify-content: center;">
+                {{ $books->links('pagination::bootstrap-4') }}
+            </div>
+        </main>
+    </div>
+    <br>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const buyButtons = document.querySelectorAll('.buy-btn');
+
+            buyButtons.forEach(btn => {
+                btn.addEventListener('click', function (event) {
+                    // Чтобы клик по кнопке не переходил по ссылке родительской <a>
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    const isAdded = this.getAttribute('data-added') === 'true';
+                    if (isAdded) {
+                        this.setAttribute('data-added', 'false');
+                        this.innerHTML = '<span>Купить</span>';
+                        this.classList.remove('added');
+                    } else {
+                        this.setAttribute('data-added', 'true');
+                        this.innerHTML = '<span>В корзине</span>';
+                        this.classList.add('added');
+                    }
+                });
+            });
+        });
+    </script>
+@endsection
+
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -126,21 +276,6 @@ input,
   -webkit-text-fill-color: transparent;
 }
 
-.cart-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #f5a65b; /* оранжевый */
-    color: white;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    font-size: 0.7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .search-wrapper {
   flex: 1;
   max-width: 720px;
@@ -176,22 +311,6 @@ input,
   font-size: 1rem;
   outline: none;
   font-family: inherit;
-}
-.search-bar input[type="search"]::-webkit-search-cancel-button {
-  display: none;
-}
-
-/* 2. Показываем кастомный крестик, как только появляется текст */
-.search-bar input[type="search"]:not(:placeholder-shown)::-webkit-search-cancel-button {
-  display: block;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 32px;
-  width: 32px;
-  background-color: #e0893c;
-  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>");
-  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>");
-  cursor: pointer;
 }
 
 .search-bar button {
@@ -230,8 +349,8 @@ input,
 }
 
 .header-actions a:hover {
-  background: white;
-  color: black;
+  background: var(--orange-light);
+  color: var(--orange-deep);
 }
 
 .main-grid {
@@ -619,49 +738,6 @@ main, .content {
 .buy-btn.added {
   background-color: #ffffff;
   color: rgb(253, 165, 0);
-}
-
-/* Кнопка "Избранное" на обложке */
-.cover-action.favorite-action {
-    right: 8px;  /* позиционируем справа */
-    left: auto;
-    top: 8px;
-    background: #ffffff;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 4px 6px;
-    transition: 0.2s;
-}
-
-.cover-action.favorite-action:hover {
-    background: #ffffff;
-    color: #ff0000;
-}
-
-.cover-action.favorite-action i {
-    color: #ff0000;
-    background: #ffffff;
-}
-
-.cover-action.favorite-action[data-favorited="true"] i {
-    color: #e3342f; /* красное сердечко, когда в избранном */
-}
-
-/* Счётчик избранного в шапке */
-.favorites-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: var(--orange-soft);
-    color: white;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    font-size: 0.7rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /*  */
