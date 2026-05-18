@@ -209,13 +209,13 @@ input,
   color: #4a3b32;
   font-size: 1.4rem;
   padding: 8px;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   background: transparent;
 }
 
 .header-actions a:hover {
-  background: var(--orange-light);
-  color: var(--orange-deep);
+  background: white;
+  color: black;
 }
 
 .main-grid {

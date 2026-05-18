@@ -117,7 +117,7 @@
         <a href="{{ route('books.index') }}"><i class="far fa-user-circle"></i></a>
 
         <a href="{{ route('cart.index') }}" style="position: relative;" title="Корзина">
-          <i class="fas fa-shopping-bag"></i>
+          <i class="fa fa-shopping-bag"></i>
           @auth
             <span class="cart-count badge bg-warning text-dark"
               style="position: absolute; top: -5px; right: -5px; font-size: 0.7rem; min-width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
@@ -131,5 +131,4 @@
   </header>
   @yield('content')
 </body>
-
 </html>

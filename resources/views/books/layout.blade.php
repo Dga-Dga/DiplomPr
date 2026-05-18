@@ -8,5 +8,17 @@
     </div>
 </body>
 <footer>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     @include('includes.footer')
 </footer>

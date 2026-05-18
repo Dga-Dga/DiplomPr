@@ -5,7 +5,7 @@
       <div class="footer-col">
         <h4>О ЛитБук</h4>
         <ul>
-          <li><a href="#"><i class="fas fa-chevron-right"></i> О компании</a></li>
+          <li><a href="{{ route('company') }}"><i class="fas fa-chevron-right"></i>О компании</a></li>
           <li><a href="#"><i class="fas fa-chevron-right"></i> Контакты</a></li>
           <li><a href="#"><i class="fas fa-chevron-right"></i> Вакансии</a></li>
           <li><a href="#"><i class="fas fa-chevron-right"></i> Блог</a></li>

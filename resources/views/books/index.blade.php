@@ -2,6 +2,10 @@
 @include('layouts.base')
 @section('content')
 
+
+
+    @include('books.slider')
+
     <div style="display: flex; gap: 30px; margin-top: 20px;">
         <!-- БОКОВАЯ ПАНЕЛЬ  -->
         <aside class="sidebar">
@@ -43,20 +47,6 @@
                 @endforeach
             </ul>
 
-            <!-- Блок Популярное -->
-            <div style="margin-top: 32px;">
-                <div style="font-weight: 600; margin-bottom: 16px; color: #4a2e1e;">
-                    <i class="far fa-star" style="color: var(--orange-soft);"></i> Популярное
-                </div>
-                <a href="{{ route('books.index', ['new' => 1, 'search' => request('search'), 'genre' => request('genre')]) }}"
-                    style="display:block; background: #fef6f0; padding: 12px 14px; border-radius: 18px; text-decoration: none; color:#3f2a1c; margin-bottom: 8px;">
-                    <i class="fas fa-tag" style="color: var(--orange-soft);"></i> Новинки недели
-                </a>
-                {{-- <a href="#"
-                    style="display:block; background: #fef6f0; padding: 12px 14px; border-radius: 18px; text-decoration: none; color:#3f2a1c;">
-                    <i class="fas fa-crown" style="color: var(--orange-soft);"></i> Бестселлеры
-                </a> --}}
-            </div>
         </aside>
 
         <!-- Основной контент -->

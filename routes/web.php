@@ -19,6 +19,8 @@ Route::resource('books', BookController::class);
 
 Route::get('books', [BookController::class, 'index'])->name('books.index');
 
+
+Route::view('/company', 'includes.company')->name('company');
 ///
 ///
 ///
