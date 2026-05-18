@@ -45,7 +45,7 @@
         <form method="GET" action="{{ route('books.index') }}">
           <div class="search-bar">
             <i class="fas fa-search"></i>
-            <input type="text" name="search" placeholder="Название книги..." value="{{ request('search') }}">
+            <input type="search" name="search" placeholder="Название книги..." value="{{ request('search') }}">
             <button><i class="fas fa-arrow-right"></i> Найти</button>
           </div>
           <!-- Скрытый инпут, чтобы при поиске не сбрасывался выбранный жанр (если он есть) -->

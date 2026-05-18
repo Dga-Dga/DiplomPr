@@ -1,83 +1,3 @@
-<style>/* Слайдер */
-.slider-container {
-    position: relative;
-    max-width: 1000px;
-    margin: 20px auto 30px;
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.slider {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.slide {
-    min-width: 100%;
-    position: relative;
-}
-
-.slide img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    display: block;
-}
-
-.slide-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.5);
-    color: rgb(255, 255, 255);
-    padding: 12px 20px;
-    font-weight: 600;
-    font-size: 1.1rem;
-}
-
-/* Кнопки-стрелки */
-.slider-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255,255,255,0.8);
-    border: none;
-    color: #333333;
-    font-size: 24px;
-    padding: 10px 14px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background 0.3s;
-    z-index: 10;
-}
-.slider-btn:hover {
-    background: white;
-}
-.prev { left: 10px; }
-.next { right: 10px; }
-
-/* Точки */
-.slider-dots {
-    text-align: center;
-    padding: 10px 0;
-    background: #f9f9f9;
-}
-.slider-dots .dot {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin: 0 5px;
-    background: #ccc;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-.slider-dots .dot.active {
-    background: #e67e22;
-}</style>
-
 <!-- Слайдер -->
 <div class="slider-container">
     <div class="slider" id="slider">
@@ -168,3 +88,83 @@
     goToSlide(0);
     startAutoSlide();
 </script>
+
+<style>/* Слайдер */
+.slider-container {
+    position: relative;
+    max-width: 1000px;
+    margin: 20px auto 30px;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    min-width: 100%;
+    position: relative;
+}
+
+.slide img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.5);
+    color: rgb(255, 255, 255);
+    padding: 12px 20px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Кнопки-стрелки */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.8);
+    border: none;
+    color: #333333;
+    font-size: 24px;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.3s;
+    z-index: 10;
+}
+.slider-btn:hover {
+    background: white;
+}
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* Точки */
+.slider-dots {
+    text-align: center;
+    padding: 10px 0;
+    background: #f9f9f9;
+}
+.slider-dots .dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.slider-dots .dot.active {
+    background: #e67e22;
+}</style>

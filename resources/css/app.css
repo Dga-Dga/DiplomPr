@@ -177,6 +177,22 @@ input,
   outline: none;
   font-family: inherit;
 }
+.search-bar input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
+/* 2. Показываем кастомный крестик, как только появляется текст */
+.search-bar input[type="search"]:not(:placeholder-shown)::-webkit-search-cancel-button {
+  display: block;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 32px;
+  width: 32px;
+  background-color: #e0893c;
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>");
+  -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/></svg>");
+  cursor: pointer;
+}
 
 .search-bar button {
   background: var(--orange-soft);

@@ -1,6 +1,4 @@
 @extends('books.layout')
-
-
 @include('layouts.base')
 
 @section('content')
@@ -13,7 +11,7 @@
     </h2>
 
     @if($favorites->isEmpty())
-        <p>У вас пока нет избранных книг. <br> <button style="background-color: rgb(228, 156, 24)"><a href="{{ route('books.index') }}">Перейти к каталогу</a></button></p>
+        <p>У вас пока нет избранных книг. <a href="{{ route('books.index') }}">Перейти к каталогу</a></p>
     @else
         <div class="book-grid">
             @foreach($favorites as $book)
