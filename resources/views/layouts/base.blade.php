@@ -114,21 +114,22 @@
           @endauth
         </a>
 
-        <a href="{{ route('books.index') }}"><i class="far fa-user-circle"></i></a>
-
+        
         <a href="{{ route('cart.index') }}" style="position: relative;" title="Корзина">
           <i class="fa fa-shopping-bag"></i>
           @auth
-            <span class="cart-count badge bg-warning text-dark"
-              style="position: absolute; top: -5px; right: -5px; font-size: 0.7rem; min-width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-              {{ Auth::user()->cartItems()->sum('quantity') }}
-            </span>
-          @endauth
-        </a>
+          <span class="cart-count badge bg-warning text-dark"
+          style="position: absolute; top: -5px; right: -5px; font-size: 0.7rem; min-width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          {{ Auth::user()->cartItems()->sum('quantity') }}
+        </span>
+        @endauth
+      </a>
+      <a href="{{ route('books.index') }}"><i class="far fa-user-circle"></i></a>
 
       </div>
     </div>
   </header>
+  @include('includes.scroll')
   @yield('content')
 </body>
 </html>

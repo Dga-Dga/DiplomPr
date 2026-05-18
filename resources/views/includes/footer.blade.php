@@ -40,9 +40,9 @@
     <div class="footer-bottom">
       <span>© 2026 ЛитБук — книжный магазин с душой</span>
       <div class="social">
-        <a href="#"><i class="fab fa-telegram"></i></a>
-        <a href="#"><i class="fab fa-vk"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="https://t.me/Kryuchookk"><i class="fab fa-telegram"></i></a>
+        <a href="https://vk.com/id227481864"><i class="fab fa-vk"></i></a>
+        <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
       </div>
     </div>
   </div>
