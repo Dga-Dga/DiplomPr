@@ -4,7 +4,8 @@
 2. composer install
 3. php artisan migrate
 4. php artisan storage:link
-5. php artisan db:seed --class=AdminUserSeeder
+5. php artisan migrate:fresh 
+6. php artisan db:seed --class=AdminUserSeeder
 
 ## - composer install --ignore-platform-reqs
 
