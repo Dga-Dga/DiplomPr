@@ -2,6 +2,8 @@
 <div class="slider-container">
     <div class="slider" id="slider">
 
+        {{-- для своих картинок маршрут --}}
+        {{-- <img src="{{ asset('storage/slider/slide1.jpg') }}" alt="Слайд 1"> --}}
         <!-- Слайд 1 -->
         <div class="slide active">
             <a href="{{ route('company') }}">
